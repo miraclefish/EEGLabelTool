@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>image/delete.png</file>
+    <file>image/add.png</file>
+    <file>image/color.png</file>
+    <file>image/Reset.png</file>
+    <file>image/Go.png</file>
+    <file>image/End.png</file>
+    <file>image/Back.png</file>
+    <file>image/Start.png</file>
+  </qresource>
+</RCC>
