@@ -53,7 +53,6 @@ class MainWindow(QMainWindow):
         self.ui.saveSetting.clicked.connect(self.saveSetting)
         self.ui.removeLabel.clicked.connect(self.removeLabel)
 
-        self.savePathCache = open('pathcache.txt', encoding='utf-8').readline()
         self.filepath = None
         self.OriginalData = None
         self.ProcessedData = None
@@ -66,9 +65,6 @@ class MainWindow(QMainWindow):
 
         self.items = []
         self.items2color = {}
-
-        
-
 
         self.Sens = int(self.ui.cb_sens.currentText()[:-2])
         self.HF = int(self.ui.cb_HF.currentText()[:-2])
@@ -101,9 +97,20 @@ class MainWindow(QMainWindow):
         self.ui.LabelGraph.setBackground(background = '#000000')
         self.initLabelGraph()
 
+        self.initPathCache()
         self.initLabelSetting()
         self.initSettingTable()
         self.changeLabelDialog()
+
+    def initPathCache(self):
+        f = open('pathcache.txt', encoding='utf-8')
+        i = 0
+        for s in f.readlines():
+            if i == 0:
+                self.openPathCache = s
+            elif i == 1:
+                self.savePathCache = s
+            i += 1
 
     def closeEvent(self, event):
         """
@@ -118,6 +125,7 @@ class MainWindow(QMainWindow):
                                     QMessageBox.No)
         if reply == QMessageBox.Yes:
             fh = open('pathcache.txt', 'w', encoding='utf-8')
+            fh.write('../\n')
             fh.write('../')
             fh.close()
             event.accept()
@@ -125,15 +133,24 @@ class MainWindow(QMainWindow):
             event.ignore()
 
     def SaveLabel(self):
-        self.savePathCache = open('pathcache.txt', encoding='utf-8').readline()
+        self.initPathCache()
         filename, kk = QFileDialog.getSaveFileName(self, '保存文件', self.savePathCache+self.filepath[-14:-4]+'.txt', '文本文件(*.txt)')
         if filename:
             pathcache = dirname(filename) + '/'
-            fh = open('pathcache.txt', 'w', encoding='utf-8')
-            fh.write(pathcache)
-            fh.close()
+            self.changePathCache(1,pathcache)
             output = DataFrame({'LabelName': self.labelNameList, 'LabelIndex': self.labelValueList})
             output.to_csv(filename, sep="\t", index=False)
+
+    def changePathCache(self, lineIdx, path):
+        fh = open('pathcache.txt', 'r', encoding='utf-8')
+        pathList = [f for f in fh.readlines()]
+        len(pathList)
+        pathList[lineIdx] = path+"\n"
+
+        fh = open('pathcache.txt', 'w', encoding='utf-8')
+        for path in pathList:
+            fh.write(path)
+        fh.close()
 
     def tabelMenu(self, pos):
         for i in self.ui.tableLabel.selectionModel().selection().indexes():
@@ -288,6 +305,7 @@ class MainWindow(QMainWindow):
         self.ui.Slider.setValue(self.OriginalData.shape[0] - self.Screen)
     def resetLabelGraph(self):
         self.p2.setXRange(0, self.ShowData.shape[0]/1000)
+        self.draw()
 
     def initComBox(self):
         self.ui.cb_sens.addItems(['500uV', '300uV', '200uV', '150uV', '100uV',
@@ -298,30 +316,32 @@ class MainWindow(QMainWindow):
         self.ui.cb_HF.addItems(['15Hz', '30Hz', '35Hz', '50Hz', '60Hz', '70Hz', '120Hz', '300Hz'])
         self.ui.cb_HF.setCurrentIndex(5)
 
-        self.ui.cb_TC.addItems(['60', '120', '240', '360', '480',
-                                 '600', '800'])
+        self.ui.cb_TC.addItems(['60', '120', '240', '', '480',
+                                 '960', '1200', '160'])
         self.ui.cb_TC.setCurrentIndex(1)
 
         self.ui.cb_Pat.addItems(['Original','新平均导联'])
-        self.ui.cb_Pat.setCurrentIndex(0)
+        self.ui.cb_Pat.setCurrentIndex(1)
 
         self.ui.cb_Screen.addItems(['0.1s', '0.2s', '0.5s', '1s', '2s', '5s', '10s',
                                      '15s', '20s', '30s', '60s', '2m', '3m', '5m'])
         self.ui.cb_Screen.setCurrentIndex(6)
 
     def OpenFile(self):
-        global current_filepath
-        fname,_ = QFileDialog.getOpenFileName(self,'打开文件','..','EDF文件(*.edf)')
-        self.filepath = fname
-        self.labelNameList = []
-        self.labelValueList = []
-        self.ui.tableLabel.clearContents()
-        self.ui.tableLabel.setRowCount(0)
-        self.drawLabel()
+        self.initPathCache()
+        fname,_ = QFileDialog.getOpenFileName(self,'打开文件',self.openPathCache,'EDF文件(*.edf)')
+        if fname:
+            self.changePathCache(0,fname+"/")
+            self.filepath = fname
+            self.labelNameList = []
+            self.labelValueList = []
+            self.ui.tableLabel.clearContents()
+            self.ui.tableLabel.setRowCount(0)
+            self.drawLabel()
 
-        self.backend = LoadThread(self.filepath)
-        self.backend.loadFinished.connect(self.loadOver)
-        self.backend.start()
+            self.backend = LoadThread(self.filepath)
+            self.backend.loadFinished.connect(self.loadOver)
+            self.backend.start()
 
     def loadOver(self, data):
         self.OriginalData = data
@@ -360,6 +380,8 @@ class MainWindow(QMainWindow):
 
         start_time, end_time = max(self.windowIndex[0], 0), min(self.windowIndex[1], N - 1)
         self.plt.clear()
+        self.plt.setMouseEnabled(x=True, y=False)
+        self.plt.enableAutoRange(x=False, y=True)
         self.plt.setXRange(start_time/1000, end_time/1000)
         self.plt.addItem(self.vLine, ignoreBounds=True)
         # self.plt.addItem(self.hLine, ignoreBounds=True)
