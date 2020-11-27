@@ -5,7 +5,7 @@ from pandas import DataFrame, read_csv
 from pandas.core import frame
 from scipy import signal
 from PyQt5.QtCore import QThread, pyqtSignal, QPointF, Qt
-from PyQt5.QtGui import QBrush, QColor
+from PyQt5.QtGui import QBrush, QColor, QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow,QApplication,QFileDialog,QInputDialog,QTableWidgetItem,QMessageBox,QMenu
 from pyqtgraph import InfiniteLine, LabelItem, mkPen, SignalProxy, LinearRegionItem
 from Ui_MainUi import Ui_MainWindow
@@ -52,6 +52,13 @@ class MainWindow(QMainWindow):
         self.ui.deleteLabel.clicked.connect(self.delete)
         self.ui.saveSetting.clicked.connect(self.saveSetting)
         self.ui.removeLabel.clicked.connect(self.removeLabel)
+
+        self.start_icon = QIcon(":/image/s.png")
+        self.end_icon = QIcon(":/image/e.png")
+        self.point_icon = QIcon(":/image/point.png")
+        # self.start_icon.addPixmap(QPixmap(":/image/s.png"), QIcon.Normal, QIcon.Off)
+        # self.point_icon.addPixmap(QPixmap(":/image/point.png"), QIcon.Normal, QIcon.Off)
+        # self.end_icon.addPixmap(QPixmap(":/image/e.png"), QIcon.Normal, QIcon.Off)
 
         self.filepath = None
         self.OriginalData = None
@@ -162,8 +169,7 @@ class MainWindow(QMainWindow):
         screenPos = self.ui.tableLabel.mapToGlobal(pos)
         action = menu.exec(screenPos)
         if action == item1:
-            loc =int(max(0,self.labelValueList[rowNum] - self.Screen/2/1000)*1000)
-            print(loc)
+            loc = int(max(0,self.labelValueList[rowNum] - self.Screen/2/1000)*1000)
             self.ui.Slider.setValue(loc)
         elif action == item2:
             self.ui.tableLabel.removeRow(rowNum)
@@ -459,13 +465,21 @@ class MainWindow(QMainWindow):
             numRow = len(self.labelValueList)
             self.ui.tableLabel.setRowCount(numRow)
             labelItem = QTableWidgetItem(self.labelNameList[-1])
-            valueItem = QTableWidgetItem(str(self.labelValueList[-1]))
+            valueItem = QTableWidgetItem()
+            valueItem.setData(Qt.DisplayRole, self.labelValueList[-1])
             color = self.items2color[self.labelNameList[-1]]
-            colorItem = QTableWidgetItem(' ')
-            colorItem.setBackground(QBrush(QColor(*color)))
+            colorItem = QTableWidgetItem()
+            if self.labelNameList[-1][-3:] == "end":
+                colorItem.setIcon(QIcon("./image/e.png"))
+            elif self.labelNameList[-1][-5:] == "start":
+                colorItem.setIcon(QIcon("./image/s.png"))
+            else:
+                colorItem.setIcon(QIcon("./image/point.png"))
+            colorItem.setBackground(QColor(*color))
             self.ui.tableLabel.setItem(numRow-1,1,labelItem)
             self.ui.tableLabel.setItem(numRow-1,2,valueItem)
             self.ui.tableLabel.setItem(numRow-1,0,colorItem)
+            self.ui.tableLabel.sortItems(2, Qt.AscendingOrder)
 
 
     def patternChoosen(self):
