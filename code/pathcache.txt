@@ -1,2 +1,1 @@
-../
-../
+C:/Users/yyy96/Documents/VScodework/EEG_detection/EEG_BECT/NewEDFData

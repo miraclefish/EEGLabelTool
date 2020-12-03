@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\yyy96\Documents\QtProjects\QtApplication\EEGLabelTool\SettingDialog.ui'
+# Form implementation generated from reading ui file 'c:\Users\yyy96\Documents\QtProjects\EEGLabelTool\code\SettingDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(267, 151)
+        Dialog.resize(371, 209)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.formLayout = QtWidgets.QFormLayout()
@@ -23,9 +23,21 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.Label_1.sizePolicy().hasHeightForWidth())
         self.Label_1.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Label_1.setFont(font)
         self.Label_1.setObjectName("Label_1")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.Label_1)
         self.LineEdit = QtWidgets.QLineEdit(Dialog)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.LineEdit.setFont(font)
         self.LineEdit.setObjectName("LineEdit")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.LineEdit)
         self.Label_2 = QtWidgets.QLabel(Dialog)
@@ -34,9 +46,21 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.Label_2.sizePolicy().hasHeightForWidth())
         self.Label_2.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Label_2.setFont(font)
         self.Label_2.setObjectName("Label_2")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.Label_2)
         self.ComboBox = QtWidgets.QComboBox(Dialog)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ComboBox.setFont(font)
         self.ComboBox.setObjectName("ComboBox")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.ComboBox)
         self.Label_3 = QtWidgets.QLabel(Dialog)
@@ -45,6 +69,12 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(2)
         sizePolicy.setHeightForWidth(self.Label_3.sizePolicy().hasHeightForWidth())
         self.Label_3.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Label_3.setFont(font)
         self.Label_3.setObjectName("Label_3")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.Label_3)
         self.Widget = QtWidgets.QWidget(Dialog)

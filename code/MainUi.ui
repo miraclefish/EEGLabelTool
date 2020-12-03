@@ -10,35 +10,47 @@
     <height>926</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>EEG标注工具</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="mainWidget" native="true">
+   <widget class="QWidget" name="mainWidget_2" native="true">
     <property name="geometry">
      <rect>
-      <x>129</x>
-      <y>10</y>
-      <width>853</width>
-      <height>861</height>
+      <x>90</x>
+      <y>20</y>
+      <width>910</width>
+      <height>787</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="mainWidget">
      <item>
-      <widget class="QWidget" name="widget_3" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-      </widget>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QSplitter" name="splitter_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>40</horstretch>
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -47,6 +59,19 @@
        </property>
        <widget class="QWidget" name="layoutWidget">
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item>
           <layout class="QGridLayout" name="gridLayout">
            <property name="rightMargin">
@@ -58,43 +83,40 @@
            <property name="verticalSpacing">
             <number>10</number>
            </property>
-           <item row="0" column="4">
-            <widget class="QLabel" name="label_Screen">
-             <property name="text">
-              <string>Screen</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+           <item row="1" column="9">
+            <widget class="QComboBox" name="cb_Screen">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
              </property>
             </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QComboBox" name="cb_sens"/>
            </item>
            <item row="1" column="1">
-            <widget class="QComboBox" name="cb_TC"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_TC">
-             <property name="text">
-              <string>间距</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+            <widget class="QComboBox" name="cb_sens">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
              </property>
             </widget>
            </item>
-           <item row="1" column="3">
-            <widget class="QComboBox" name="cb_Pat"/>
-           </item>
-           <item row="1" column="2">
-            <widget class="QComboBox" name="cb_HF"/>
-           </item>
-           <item row="1" column="4">
-            <widget class="QComboBox" name="cb_Screen"/>
-           </item>
-           <item row="0" column="2">
+           <item row="0" column="5">
             <widget class="QLabel" name="label_HF">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>HF</string>
              </property>
@@ -103,8 +125,28 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
+           <item row="1" column="7">
+            <widget class="QComboBox" name="cb_Pat">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="7">
             <widget class="QLabel" name="label_Pat">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Pat</string>
              </property>
@@ -113,8 +155,34 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_TC">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>间距</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
             <widget class="QLabel" name="label_sens">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Sens</string>
              </property>
@@ -123,53 +191,169 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="5">
+            <widget class="QComboBox" name="cb_HF">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QComboBox" name="cb_TC">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="9">
+            <widget class="QLabel" name="label_Screen">
+             <property name="font">
+              <font>
+               <family>微软雅黑</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Screen</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="8" rowspan="2">
+            <spacer name="verticalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="6" rowspan="2">
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="2" rowspan="2">
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="4" rowspan="2">
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="10" rowspan="2">
+            <spacer name="verticalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+            <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
              <item>
-              <widget class="QLabel" name="space_1">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="text">
-                <string/>
+               <property name="sizeType">
+                <enum>QSizePolicy::Preferred</enum>
                </property>
-              </widget>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="space_2">
+              <widget class="HighLightLabel" name="label_1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_1">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Fp1</string>
@@ -180,20 +364,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="HighLightLabel" name="label_2">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Fp2</string>
@@ -204,20 +394,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_3">
+              <widget class="HighLightLabel" name="label_3">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>F3</string>
@@ -228,20 +424,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_4">
+              <widget class="HighLightLabel" name="label_4">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>F4</string>
@@ -252,20 +454,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_5">
+              <widget class="HighLightLabel" name="label_5">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>C3</string>
@@ -276,20 +484,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_6">
+              <widget class="HighLightLabel" name="label_6">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>C4</string>
@@ -300,20 +514,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_7">
+              <widget class="HighLightLabel" name="label_7">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>P3</string>
@@ -324,20 +544,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_8">
+              <widget class="HighLightLabel" name="label_8">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>P4</string>
@@ -348,20 +574,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_9">
+              <widget class="HighLightLabel" name="label_9">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>O1</string>
@@ -372,20 +604,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_10">
+              <widget class="HighLightLabel" name="label_10">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>O2</string>
@@ -396,20 +634,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_11">
+              <widget class="HighLightLabel" name="label_11">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>F7</string>
@@ -420,20 +664,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_12">
+              <widget class="HighLightLabel" name="label_12">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>F8</string>
@@ -444,20 +694,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_13">
+              <widget class="HighLightLabel" name="label_13">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>T3</string>
@@ -468,20 +724,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_14">
+              <widget class="HighLightLabel" name="label_14">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>T4</string>
@@ -492,20 +754,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_15">
+              <widget class="HighLightLabel" name="label_15">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>T5</string>
@@ -516,20 +784,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_16">
+              <widget class="HighLightLabel" name="label_16">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>T6</string>
@@ -540,20 +814,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_17">
+              <widget class="HighLightLabel" name="label_17">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Fz</string>
@@ -564,20 +844,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_18">
+              <widget class="HighLightLabel" name="label_18">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Cz</string>
@@ -588,20 +874,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_19">
+              <widget class="HighLightLabel" name="label_19">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Pz</string>
@@ -612,20 +904,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_20">
+              <widget class="HighLightLabel" name="label_20">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>EMG-L1</string>
@@ -636,20 +934,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_21">
+              <widget class="HighLightLabel" name="label_21">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>EMG-R1</string>
@@ -660,20 +964,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_22">
+              <widget class="HighLightLabel" name="label_22">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>EMG-L2</string>
@@ -684,20 +994,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_23">
+              <widget class="HighLightLabel" name="label_23">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>EMG-R2</string>
@@ -708,20 +1024,26 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_24">
+              <widget class="HighLightLabel" name="label_24">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
                <property name="font">
                 <font>
                  <family>Times New Roman</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
+               </property>
+               <property name="mouseTracking">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>ECG</string>
@@ -732,14 +1054,13 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="space_3">
-               <property name="text">
-                <string/>
+              <widget class="QLabel" name="label_27">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>1</verstretch>
+                </sizepolicy>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="space_4">
                <property name="text">
                 <string/>
                </property>
@@ -748,9 +1069,9 @@
              <item>
               <widget class="QPushButton" name="Reset">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                  <horstretch>0</horstretch>
-                 <verstretch>5</verstretch>
+                 <verstretch>6</verstretch>
                 </sizepolicy>
                </property>
                <property name="minimumSize">
@@ -893,10 +1214,211 @@
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
+        <widget class="QWidget" name="formLayoutWidget">
+         <layout class="QFormLayout" name="formLayout">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_age">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>年龄</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_gender">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>性别</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QRadioButton" name="rBmale">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>男</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rBfemale">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>女</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_diagnosis">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>病史</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QTextEdit" name="textEdit">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QSpinBox" name="spinYear">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>2</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>20</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_26">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>1</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>岁</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinMonth">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>2</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="maximum">
+               <number>11</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_30">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>2</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>个月</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="layoutWidget">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="label_25">
+            <property name="font">
+             <font>
+              <family>微软雅黑</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="text">
              <string>标注列表</string>
             </property>
@@ -909,6 +1431,11 @@
               <horstretch>0</horstretch>
               <verstretch>10</verstretch>
              </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -975,6 +1502,14 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>标签名称和颜色设置</string>
               </property>
@@ -1008,6 +1543,13 @@
           </item>
           <item>
            <widget class="QTableWidget" name="tableSetting">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
@@ -1095,6 +1637,13 @@
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QPushButton" name="bt1">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1102,6 +1651,14 @@
             </item>
             <item>
              <widget class="QPushButton" name="removeLabel">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>清除标注</string>
               </property>
@@ -1109,6 +1666,14 @@
             </item>
             <item>
              <widget class="QPushButton" name="saveSetting">
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>保存设置</string>
               </property>
@@ -1122,14 +1687,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_4" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-      </widget>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>318</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -1175,12 +1743,17 @@
   <customwidget>
    <class>GraphicsLayoutWidget</class>
    <extends>QGraphicsView</extends>
-   <header location="global">pyqtgraph.h</header>
+   <header>pyqtgraph.h</header>
   </customwidget>
   <customwidget>
    <class>MySlider</class>
    <extends>QSlider</extends>
    <header>MySlider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>HighLightLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">HighLightLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

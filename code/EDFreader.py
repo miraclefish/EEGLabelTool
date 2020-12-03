@@ -91,13 +91,13 @@ class EDFreader(object):
         ref_filted = self._lowpass(HigHz=300, data=ref_signal)
 
         # EMG data filter
-        emg_filted = self._bandpass(lowHz=53, HigHz=120, data=emg_signal)
+        emg_filted = self._bandpass(lowHz=5.3, HigHz=120, data=emg_signal)
 
         # ECG data filter
-        ecg_filted = self._lowpass(HigHz=15, data=ecg_signal)
+        ecg_filted = self._bandpass(lowHz=0.5, HigHz=15, data=ecg_signal)
         # ecg_filted = ecg_filted * 0.15
 
-        filted_data = vstack((-eeg_filted, -ref_filted, emg_filted, ecg_filted))
+        filted_data = vstack((-eeg_filted, -ref_filted, -emg_filted, -ecg_filted))
         sorted_data = DataFrame(filted_data.T, columns=columns)
         return sorted_data
 
@@ -105,14 +105,14 @@ class EDFreader(object):
     def _bandpass(self, lowHz, HigHz, data):
         lf = lowHz * 2.0 / 1000
         hf = HigHz * 2.0 / 1000
-        N = 8
+        N = 2
         b, a = signal.butter(N, [lf, hf], "bandpass")
         filted_data = signal.filtfilt(b, a, data)
         return filted_data
 
     def _lowpass(self, HigHz, data):
         hf = HigHz * 2.0 / 1000
-        N = 8
+        N = 2
         b, a = signal.butter(N, hf, "lowpass")
         filted_data = signal.filtfilt(b, a, data)
         return filted_data

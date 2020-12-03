@@ -1,5 +1,6 @@
 from sys import argv, exit
-from os.path import dirname
+import json
+from os.path import dirname, basename, exists
 from numpy import ones, arange
 from pandas import DataFrame, read_csv
 from pandas.core import frame
@@ -10,6 +11,7 @@ from PyQt5.QtWidgets import QMainWindow,QApplication,QFileDialog,QInputDialog,QT
 from pyqtgraph import InfiniteLine, LabelItem, mkPen, SignalProxy, LinearRegionItem
 from Ui_MainUi import Ui_MainWindow
 from SettingDialog import SettingDialog
+from SavingDialog import SavingDialog
 from EDFreader import EDFreader
 
 class LoadThread(QThread):
@@ -29,13 +31,15 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setWindowState(Qt.WindowMaximized)
         self.initComBox()
 
-        self.setCentralWidget(self.ui.mainWidget)
-        self.ui.splitter_2.setStretchFactor(0, 8)
+        self.setCentralWidget(self.ui.mainWidget_2)
+        self.ui.splitter_2.setStretchFactor(0, 10)
         self.ui.splitter_2.setStretchFactor(1, 4)
-        self.ui.splitter.setStretchFactor(0, 8)
-        self.ui.splitter.setStretchFactor(1, 4)
+        self.ui.splitter.setStretchFactor(0, 1)
+        self.ui.splitter.setStretchFactor(1, 6)
+        self.ui.splitter.setStretchFactor(2, 3)
 
         self.ui.tableSetting.setColumnWidth(0, 100)
         self.ui.tableSetting.setColumnWidth(1, 100)
@@ -53,13 +57,6 @@ class MainWindow(QMainWindow):
         self.ui.saveSetting.clicked.connect(self.saveSetting)
         self.ui.removeLabel.clicked.connect(self.removeLabel)
 
-        self.start_icon = QIcon(":/image/s.png")
-        self.end_icon = QIcon(":/image/e.png")
-        self.point_icon = QIcon(":/image/point.png")
-        # self.start_icon.addPixmap(QPixmap(":/image/s.png"), QIcon.Normal, QIcon.Off)
-        # self.point_icon.addPixmap(QPixmap(":/image/point.png"), QIcon.Normal, QIcon.Off)
-        # self.end_icon.addPixmap(QPixmap(":/image/e.png"), QIcon.Normal, QIcon.Off)
-
         self.filepath = None
         self.OriginalData = None
         self.ProcessedData = None
@@ -72,6 +69,40 @@ class MainWindow(QMainWindow):
 
         self.items = []
         self.items2color = {}
+
+        self.filename = None
+        self.Age = (0,0)
+        self.gender = "无"
+        self.text = "无"
+        self.length = 0
+        self.label_num = 0
+        self.label_types = None
+
+        self.chns_hl_list = [False] * 24
+        self.ui.label_1.clicked.connect(self.highlightDraw)
+        self.ui.label_2.clicked.connect(self.highlightDraw)
+        self.ui.label_3.clicked.connect(self.highlightDraw)
+        self.ui.label_4.clicked.connect(self.highlightDraw)
+        self.ui.label_5.clicked.connect(self.highlightDraw)
+        self.ui.label_6.clicked.connect(self.highlightDraw)
+        self.ui.label_7.clicked.connect(self.highlightDraw)
+        self.ui.label_8.clicked.connect(self.highlightDraw)
+        self.ui.label_9.clicked.connect(self.highlightDraw)
+        self.ui.label_10.clicked.connect(self.highlightDraw)
+        self.ui.label_11.clicked.connect(self.highlightDraw)
+        self.ui.label_12.clicked.connect(self.highlightDraw)
+        self.ui.label_13.clicked.connect(self.highlightDraw)
+        self.ui.label_14.clicked.connect(self.highlightDraw)
+        self.ui.label_15.clicked.connect(self.highlightDraw)
+        self.ui.label_16.clicked.connect(self.highlightDraw)
+        self.ui.label_17.clicked.connect(self.highlightDraw)
+        self.ui.label_18.clicked.connect(self.highlightDraw)
+        self.ui.label_19.clicked.connect(self.highlightDraw)
+        self.ui.label_20.clicked.connect(self.highlightDraw)
+        self.ui.label_21.clicked.connect(self.highlightDraw)
+        self.ui.label_22.clicked.connect(self.highlightDraw)
+        self.ui.label_23.clicked.connect(self.highlightDraw)
+        self.ui.label_24.clicked.connect(self.highlightDraw)
 
         self.Sens = int(self.ui.cb_sens.currentText()[:-2])
         self.HF = int(self.ui.cb_HF.currentText()[:-2])
@@ -109,15 +140,18 @@ class MainWindow(QMainWindow):
         self.initSettingTable()
         self.changeLabelDialog()
 
+    def highlightDraw(self, Name, hl):
+        loc = int(Name[6:])
+        self.chns_hl_list[loc-1] = hl
+        self.draw()
+
+
     def initPathCache(self):
         f = open('pathcache.txt', encoding='utf-8')
-        i = 0
         for s in f.readlines():
-            if i == 0:
-                self.openPathCache = s
-            elif i == 1:
-                self.savePathCache = s
-            i += 1
+            self.openPathCache = s + '/'
+            self.savePathCache = s + '/'
+        return None
 
     def closeEvent(self, event):
         """
@@ -131,32 +165,70 @@ class MainWindow(QMainWindow):
                                     QMessageBox.Yes | QMessageBox.No,
                                     QMessageBox.No)
         if reply == QMessageBox.Yes:
-            fh = open('pathcache.txt', 'w', encoding='utf-8')
-            fh.write('../\n')
-            fh.write('../')
-            fh.close()
+            self.saveSetting()
             event.accept()
         else:
             event.ignore()
 
     def SaveLabel(self):
         self.initPathCache()
-        filename, kk = QFileDialog.getSaveFileName(self, '保存文件', self.savePathCache+self.filepath[-14:-4]+'.txt', '文本文件(*.txt)')
-        if filename:
-            pathcache = dirname(filename) + '/'
-            self.changePathCache(1,pathcache)
-            output = DataFrame({'LabelName': self.labelNameList, 'LabelIndex': self.labelValueList})
-            output.to_csv(filename, sep="\t", index=False)
+        self.initSave()
 
-    def changePathCache(self, lineIdx, path):
+        if self.ui.spinYear.value() == 0 and self.ui.spinMonth.value() == 0:
+            QMessageBox.critical(self,'警告','请添加该样本的年龄信息')
+            return None
+        if (not self.ui.rBmale.isChecked()) and (not self.ui.rBfemale.isChecked()):
+            QMessageBox.critical(self,'警告','请添加该样本的性别信息')
+            return None
+        
+        # dialog = SavingDialog()
+        dialog = SavingDialog(filename = self.filename,
+                            age = self.Age,
+                            gender = self.gender,
+                            l = self.length,
+                            text = self.text,
+                            num = self.label_num,
+                            types = self.label_types)
+        # dialog.setWindowModality(Qt.ApplicationModal)
+        output = dialog.exec()
+        if output:
+            filename, kk = QFileDialog.getSaveFileName(self, '保存文件', self.savePathCache+self.filename[:-4]+'.json', '文本文件(*.json)')
+            if filename:
+                label_info = {"filename":self.filename,
+                            "Age":("{}岁{}个月".format(self.Age[0],self.Age[1]),self.Age),
+                            "Gender":self.gender,
+                            "Signal length":self.length,
+                            "Diagnosis text":self.text,
+                            "Label number":self.label_num,
+                            "Label types":self.label_types,
+                            "LabelName":self.labelNameList,
+                            "LabelIndex":self.labelValueList}
+                with open(filename, "w", encoding='utf-8') as f:
+                    f.write(json.dumps(label_info, ensure_ascii=False,indent=4,separators=(',',':')))
+        else:
+            return None
+
+    def initSave(self):
+        self.filename = basename(self.filepath)
+        self.Age = (self.ui.spinYear.value(), self.ui.spinMonth.value())
+        self.gender = "无"
+        if self.ui.rBmale.isChecked():
+            self.gender = "男"
+        else:
+            self.gender = "女"
+        self.text = self.ui.textEdit.toPlainText()
+        self.length = self.OriginalData.shape[0]/1000
+        self.label_num = int(len(self.labelValueList)/2)
+        self.label_types = list(set([label[:-4] for label in self.labelNameList if label[-3:] == "end"]))
+
+
+    def changePathCache(self, path):
         fh = open('pathcache.txt', 'r', encoding='utf-8')
         pathList = [f for f in fh.readlines()]
-        len(pathList)
-        pathList[lineIdx] = path+"\n"
 
         fh = open('pathcache.txt', 'w', encoding='utf-8')
-        for path in pathList:
-            fh.write(path)
+        
+        fh.write(path)
         fh.close()
 
     def tabelMenu(self, pos):
@@ -302,9 +374,9 @@ class MainWindow(QMainWindow):
         self.ui.Slider.setPageStep(int(self.Screen/4))
 
     def backLoc(self):
-        self.ui.Slider.setValue(self.ui.Slider.value() - int(self.Screen/2))
+        self.ui.Slider.setValue(self.ui.Slider.value() - int(self.Screen/3))
     def goLoc(self):
-        self.ui.Slider.setValue(self.ui.Slider.value() + int(self.Screen/2))
+        self.ui.Slider.setValue(self.ui.Slider.value() + int(self.Screen/3))
     def startLoc(self):
         self.ui.Slider.setValue(0)
     def endLoc(self):
@@ -322,8 +394,8 @@ class MainWindow(QMainWindow):
         self.ui.cb_HF.addItems(['15Hz', '30Hz', '35Hz', '50Hz', '60Hz', '70Hz', '120Hz', '300Hz'])
         self.ui.cb_HF.setCurrentIndex(5)
 
-        self.ui.cb_TC.addItems(['60', '120', '240', '', '480',
-                                 '960', '1200', '160'])
+        self.ui.cb_TC.addItems(['60', '120', '240', '360', '480',
+                                 '960', '1200', '1600'])
         self.ui.cb_TC.setCurrentIndex(1)
 
         self.ui.cb_Pat.addItems(['Original','新平均导联'])
@@ -337,17 +409,76 @@ class MainWindow(QMainWindow):
         self.initPathCache()
         fname,_ = QFileDialog.getOpenFileName(self,'打开文件',self.openPathCache,'EDF文件(*.edf)')
         if fname:
-            self.changePathCache(0,fname+"/")
+            self.changePathCache(dirname(fname))
             self.filepath = fname
-            self.labelNameList = []
-            self.labelValueList = []
-            self.ui.tableLabel.clearContents()
-            self.ui.tableLabel.setRowCount(0)
-            self.drawLabel()
+            label_path = fname[:-4]+".json"
+            self.ui.Slider.setValue(0)
+            if exists(label_path):
+                with open(label_path, mode='r', encoding='utf-8') as f:
+                    label_info = json.load(f)
+                    self.filename = label_info['filename']
+                    self.Age = label_info['Age'][1]
+                    self.gender = label_info['Gender']
+                    self.text = label_info['Diagnosis text']
+                    self.length = label_info['Signal length']
+                    self.label_num = label_info['Label number']
+                    self.label_types = label_info['Label types']
+                    self.labelNameList = label_info['LabelName']
+                    self.labelValueList = label_info['LabelIndex']
+                self.initLabelInfo()
+            else:
+                self.ui.tableLabel.clearContents()
+                self.labelNameList = []
+                self.labelValueList = []
+                self.filename = None
+                self.Age = (0,0)
+                self.gender = "无"
+                self.text = "无"
+                self.length = 0
+                self.label_num = 0
+                self.label_types = None
+                self.initLabelInfo()
 
             self.backend = LoadThread(self.filepath)
             self.backend.loadFinished.connect(self.loadOver)
             self.backend.start()
+
+
+    def initLabelInfo(self):
+        self.ui.spinYear.setValue(self.Age[0])
+        self.ui.spinMonth.setValue(self.Age[1])
+        if self.gender == "男":
+            self.ui.rBmale.setChecked(True)
+        elif self.gender == "女":
+            self.ui.rBfemale.setChecked(True)
+        elif self.gender == "无":
+            self.ui.rBfemale.setCheckable(False)
+            self.ui.rBfemale.setCheckable(True)
+            self.ui.rBmale.setCheckable(False)
+            self.ui.rBmale.setCheckable(True)
+        self.ui.textEdit.setText(self.text)
+
+        self.ui.tableLabel.setRowCount(len(self.labelValueList))
+        i = 0
+        for label, index in zip(self.labelNameList, self.labelValueList):
+            
+            labelItem = QTableWidgetItem(label)
+            valueItem = QTableWidgetItem()
+            valueItem.setData(Qt.DisplayRole, index)
+            color = self.items2color[label]
+            colorItem = QTableWidgetItem()
+            if label[-3:] == "end":
+                colorItem.setIcon(QIcon("./image/e.png"))
+            elif label[-5:] == "start":
+                colorItem.setIcon(QIcon("./image/s.png"))
+            else:
+                colorItem.setIcon(QIcon("./image/point.png"))
+            colorItem.setBackground(QColor(*color))
+            self.ui.tableLabel.setItem(i,1,labelItem)
+            self.ui.tableLabel.setItem(i,2,valueItem)
+            self.ui.tableLabel.setItem(i,0,colorItem)
+            self.ui.tableLabel.sortItems(2, Qt.AscendingOrder)
+            i = i+1
 
     def loadOver(self, data):
         self.OriginalData = data
@@ -357,6 +488,7 @@ class MainWindow(QMainWindow):
         self.patternChoosen()
         self.sliderSetting()
         self.draw()
+        self.drawLabel()
 
     def initGraph(self):
         self.ShowData = ones((10000))
@@ -394,9 +526,12 @@ class MainWindow(QMainWindow):
 
         i = 0
         x = arange(start_time, end_time)/1000.0
-        for col in list(columns[::-1]):
+        for col, hl in zip(list(columns[::-1]), self.chns_hl_list[::-1]):
             if col in ["X1", "X2", "X3", "X4", "X5"]:
                 ratio = 40.0 / self.Sens
+                placement = self.placement
+            elif col in ["X5"]:
+                ratio = 20.0 / self.Sens
                 placement = self.placement
             else:
                 placement = self.placement
@@ -404,7 +539,12 @@ class MainWindow(QMainWindow):
             y = self.ShowData[col][start_time:end_time] * ratio + i * placement
             if col == "X5":
                 y = y * 0.15
-            self.plt.plot(x = x, y = y, pen=mkPen(color='#FFFFFF', width=1.0))
+            color = "#ffffff"
+            wid = 1.0
+            if hl == True:
+                color = "#ffff00"
+                wid = 1.5
+            self.plt.plot(x = x, y = y, pen=mkPen(color=color, width=wid))
             i += 1
         
         j = 0
@@ -422,7 +562,7 @@ class MainWindow(QMainWindow):
         self.lr.setRegion(region)
         self.p2.addItem(self.lr)
 
-        message = "File <" + self.filepath[-14:] + "> was viewed from " + str(min(x)) + "s to " + str(max(x)) + \
+        message = "File <" + basename(self.filepath) + "> was viewed from " + str(min(x)) + "s to " + str(max(x)) + \
             "s with " + "【HF】=" + str(self.HF) + "Hz; 【Sens】=" + str(self.Sens) + "uV; 【Pat】 is \"" + self.Pat + "\""
         self.ui.statusbar.showMessage(message)
 
@@ -444,17 +584,14 @@ class MainWindow(QMainWindow):
 
     def mouseMoved(self, evt):
         pos = evt[0]  ## using signal proxy turns original arguments into a tuple
-        # print("movePos", pos)
         if self.plt.sceneBoundingRect().contains(pos):
             mousePoint = self.vb.mapSceneToView(pos)
             self.label.setText("<span style='font-size: 14pt; color: white'> t = %0.2f s  y = %0.2f </span>"% (mousePoint.x(), mousePoint.y()))
             self.vLine.setPos(mousePoint.x())
-            # self.hLine.setPos(mousePoint.y())
     
     def mouseClicked(self, evt):
         pos = QPointF(evt[0].scenePos())
         mousePoint = self.vb.mapSceneToView(pos)
-        # print("pos = (", mousePoint.x(), ',', mousePoint.y(), ')')
         
         item, ok =QInputDialog.getItem(self,'请选择标记类型','类别列表',self.items)
         if ok and item:
@@ -498,14 +635,17 @@ class MainWindow(QMainWindow):
             self.ProcessedData = self.OriginalData.copy(deep = True)
         else:
             data = data[:,:21].T
-            filtedData = self._lowpass(HigHz=self.HF, data=data)
-            self.ProcessedData[columns[:21]] = filtedData.T 
-    def _lowpass(self, HigHz, data):
+            filtedData = self._band_pass_filter(LowHz=0.5, HigHz=self.HF, data=data)
+            self.ProcessedData[columns[:21]] = filtedData.T
+
+    def _band_pass_filter(self, LowHz, HigHz, data):
         hf = HigHz * 2.0 / 1000
-        N = 8
-        b, a = signal.butter(N, hf, "lowpass")
+        lf = LowHz * 2.0 / 1000
+        N = 2
+        b, a = signal.butter(N, [lf, hf], "bandpass")
         filted_data = signal.filtfilt(b, a, data)
         return filted_data
+
 
 if __name__=="__main__":
     app = QApplication(argv)
